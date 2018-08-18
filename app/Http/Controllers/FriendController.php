@@ -64,6 +64,6 @@ class FriendController extends Controller
 
 		Auth::user()->deleteFriend($user);
 
-		return back()->with('alert', "You have unfriended {$user->getFirstNameOrUsername()}.");
+		return back()->with('alert', "You have unfriended {$user->getName()}.");
 	}
 }

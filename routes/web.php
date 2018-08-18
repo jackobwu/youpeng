@@ -41,7 +41,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/friends/accept/{username}', 'FriendController@getAccept')->name('friends.accept');
 
-	Route::post('/friends/delete/{username}', 'FriendController@postDelete')->name('friends.delete');
+    Route::post('/friends/delete/{username}', 'FriendController@postDelete')->name('friends.delete');
+    
+    // Statuses
 
+    Route::post('/statuses', 'StatusController@postStatus')->name('status.post');
+    
+    Route::post('/statuses/{statusId}/reply', 'StatusController@postReply')->name('status.reply');
+
+    Route::get('/statuses/{statusId}/like', 'StatusController@getLike')->name('status.like');
 
 });

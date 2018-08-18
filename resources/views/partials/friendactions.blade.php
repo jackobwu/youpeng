@@ -12,14 +12,14 @@
 
 	<p>You and {{ $user->getName() }} are friends.</p>
 
-	<form action="#" method="post">
+	<form action="{{ route('friends.delete', ['username' => $user->name]) }}" method="post">
 		<input type="submit" value="Unfriend" class="button is-danger">
 		@csrf
 	</form>
 
 @elseif(Auth::id() !== $user->id)
 
-	<a href="#" class="button is-primary">
+	<a href="{{ route('friends.add', ['username' => $user->name]) }}" class="button is-primary">
 		Add as friend
 	</a>
 

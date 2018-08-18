@@ -9,14 +9,14 @@ use Illuminate\Http\Request;
 class ProfileController extends Controller
 {
     public function getProfile($username){
-		$user = User::where('name', $username)->firstOrFail();
+			$user = User::where('name', $username)->firstOrFail();
 
-		$posts = $user->posts()->latest()->get();
+			$statuses = $user->statuses()->whereNull('parent_id')->latest()->get();
 
-		return view('profile.index')->with(compact('user', 'statuses'));
+			return view('profile.index')->with(compact('user', 'statuses'));
     }
     
     public function getEdit(){
-		return view('profile.edit');
+			return view('profile.edit');
 	}
 }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use Auth;
+use App\Status;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,25 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $posts = Post::where(function($query){
-        //     return $query->where('user_id', Auth::id());
-        // })
-        // ->latest()
-        // ->paginate(20);
+        $statuses = Status::whereNull('parent_id')->where(function($query){
+            return $query->where('user_id', Auth::id())
+                ->orWhereIn('user_id', Auth::user()->friends()->pluck('id'));;
+        })
+        ->latest()
+        ->paginate(20);
         
-        // return view('timeline')->with(compact('statuses'));
-        // if(Auth::check()){
-		// 	$statuses = Status::whereNull('parent_id')->where(function($query){
-		// 		return $query->where('user_id', Auth::id())
-		// 			->orWhereIn('user_id', Auth::user()->friends()->pluck('id'));
-		// 	})
-		// 	->latest()
-		// 	->paginate(20);
-			
-		// 	return view('timeline')->with(compact('statuses'));
-		// }
-
-		return view('home');
-
+        return view('timeline')->with(compact('statuses'));
+        
     }
 }

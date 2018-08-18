@@ -35,11 +35,11 @@ class User extends Authenticatable
 
     public function getAvatarUrl(){
 		$hash = md5($this->email);
-		return "https://www.gravatar.com/avatar/{$hash}";
+		return "https://www.gravatar.com/avatar/{$hash}?s=40";
     }
     
-    public function posts(){
-		return $this->hasMany('App\Post');
+    public function statuses(){
+		return $this->hasMany('App\Status');
     }
     
     public function friendsOfMine(){
@@ -86,5 +86,9 @@ class User extends Authenticatable
     
     public function isFriendsWith(User $user){
 		return (bool) $this->friends()->where('id', $user->id)->count();
-	}
+  }
+  
+    public function hasLikedStatus(Status $status){
+      return (bool) $status->likes->where('user_id', $this->id)->count();
+    }
 }
